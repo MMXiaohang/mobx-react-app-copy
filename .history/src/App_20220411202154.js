@@ -1,22 +1,23 @@
 import './App.css';
+// 1. 导入 counterStore
+import { counterStore } from './store/counter.Store'
 // 2. 导入中间件连接 mobx react 完成响应式变化
 import {observer} from 'mobx-react-lite'
 import {useStore} from './store/index'
 
 function App() {
 
-  // 解构赋值到store实例对象就可以了，防止破坏响应式，用哪个store就解构哪个
-  const {counterStore, listStore} = useStore()
+  const rootStore = useStore()
   
   return (
     <div className="App">
       {/* 把store中的count渲染一下 */}
-      {counterStore.count}
+      {rootStore.counterStore.count}
       {/* 使用计算属性 */}
       {counterStore.filterList.join('-')}
       {/*点击事件触发action函数修改count */}
-      <button onClick={counterStore.addCount}>+</button>
-      <button onClick={listStore.addList}>add</button>
+      <button onClick={rootStore.counterStore.addCount}>+</button>
+      <button onClick={rootStore.listStore.addList}>add</button>
     </div>
   );
 }
